@@ -18,6 +18,8 @@ public class FlightBooking {
     private static int childPassengers;
     private static int adultPassengers;
     private static int totalPassengers;
+    private static double departingTicketPrice;
+    private static double returnTicketPrice;
     private static double totalTicketPrice;
     private String ticketNumber;
     private static BookingClass bookingClass;
@@ -58,21 +60,21 @@ public class FlightBooking {
     public enum TripSource {
         NANJING, BEIJING, OULU, HELSINKI;
     }
-    public void setTripSource(int input2) {
+    public void setTripSource(String input2) {
         switch (input2) {
-            case 1:
+            case "1":
             tripSource= TripSource.NANJING;
             break;
 
-            case 2:
+            case "2":
             tripSource= TripSource.BEIJING;
             break; 
 
-            case 3:
+            case "3":
             tripSource= TripSource.OULU;
             break;
 
-            case 4:
+            case "4":
             tripSource= TripSource.HELSINKI;
             break;
 
@@ -100,21 +102,21 @@ public class FlightBooking {
     public enum TripDestination {
         NANJING, BEIJING, OULU, HELSINKI;
     }
-    public void setTripDestination(int input3) {
+    public void setTripDestination(String input2,String input3 ) {
         switch (input3) {
-            case 1:
+            case "1":
             tripDestination = TripDestination.NANJING;
             break;
 
-            case 2:
+            case "2":
             tripDestination = TripDestination.BEIJING;
             break; 
 
-            case 3:
+            case "3":
             tripDestination = TripDestination.OULU;
             break;
 
-            case 4:
+            case "4":
             tripDestination = TripDestination.HELSINKI;
             break;
 
@@ -184,49 +186,65 @@ public class FlightBooking {
     public void setTotalPassengers(int ChildPassengers, int AdultPassengers) {
         totalPassengers = ChildPassengers + AdultPassengers;
     }
-    
+
+
+    public double getDepartingTicketPrice() {
+        return departingTicketPrice;
+    }
+    public void setDepartingTicketPrice(int childPassengers,int adultPassengers){
+        if((tripSource==TripSource.NANJING && tripDestination == TripDestination.BEIJING) || (tripSource==TripSource.BEIJING && tripDestination == TripDestination.NANJING) || (tripSource==TripSource.HELSINKI && tripDestination == TripDestination.OULU) || (tripSource==TripSource.OULU && tripDestination == TripDestination.HELSINKI)) {
+            double taxes = 30;
+            double service_fees = 15;
+            departingTicketPrice = (300 + taxes + service_fees) * (childPassengers + adultPassengers);
+        }
+
+        
+        else{
+            double taxes1 = 45;
+            double service_fees1= 30;
+            departingTicketPrice = (300 + taxes1 + service_fees1) * (childPassengers + adultPassengers);
+    }
+
+    }
+
+
+    public double getReturnTicketPrice() {
+        return returnTicketPrice;
+    }
+    public void setReturnTicketPrice(){
+
+        if(tripType==TripType.ONE_WAY){
+            returnTicketPrice = 0;
+        }
+        if(tripType==TripType.RETURN){
+            returnTicketPrice = departingTicketPrice;
+        }
+    }
 
     public double getTotalTicketPrice() {
         return totalTicketPrice;
     } 
     public void setTotalTicketPrice() {
-    
-        int the_base_ticket_price = 300;
-        if((tripSource==TripSource.NANJING && tripDestination == TripDestination.BEIJING) || (tripSource==TripSource.BEIJING && tripDestination == TripDestination.NANJING)) {
-            double taxes = the_base_ticket_price * 0.1;
-            double service_fees = the_base_ticket_price * 0.05;
+    if(tripType==TripType.ONE_WAY){
             if(bookingClass==BookingClass.FIRST) {
-                totalTicketPrice = (the_base_ticket_price + taxes + service_fees + 250) * totalPassengers;
+                totalTicketPrice = departingTicketPrice + 250;
                 }else if(bookingClass==BookingClass.BUSINESS) {
-                    totalTicketPrice = (the_base_ticket_price + taxes + service_fees + 150) * totalPassengers;
+                    totalTicketPrice = departingTicketPrice + 150;
                     }else if(bookingClass==BookingClass.ECONOMY) {
-                        totalTicketPrice = (the_base_ticket_price + taxes + service_fees + 50) * totalPassengers;
+                        totalTicketPrice =departingTicketPrice + 50;
                         }
         }
 
-        if((tripSource==TripSource.HELSINKI && tripDestination == TripDestination.OULU) || (tripSource==TripSource.OULU && tripDestination == TripDestination.HELSINKI)) {
-            double taxes = the_base_ticket_price * 0.1;
-            double service_fees = the_base_ticket_price * 0.05;
+        if(tripType==TripType.RETURN){
             if(bookingClass==BookingClass.FIRST) {
-                totalTicketPrice = (the_base_ticket_price + taxes + service_fees + 250) * totalPassengers;
+                totalTicketPrice = (departingTicketPrice + 250) *2;
                 }else if(bookingClass==BookingClass.BUSINESS) {
-                    totalTicketPrice = (the_base_ticket_price + taxes + service_fees + 150) * totalPassengers;
+                    totalTicketPrice = (departingTicketPrice + 150)*2;
                     }else if(bookingClass==BookingClass.ECONOMY) {
-                        totalTicketPrice = (the_base_ticket_price + taxes + service_fees + 50) * totalPassengers;
-                    }
+                        totalTicketPrice =(departingTicketPrice + 50) *2;
+                        }
         }
-        else{
-            double taxes1 = the_base_ticket_price * 0.15;
-            double service_fees1= the_base_ticket_price * 0.1;
-            if(bookingClass==BookingClass.FIRST) {
-                totalTicketPrice = the_base_ticket_price + taxes1 + service_fees1 + 250;
-                }else if(bookingClass==BookingClass.BUSINESS) {
-                    totalTicketPrice = the_base_ticket_price + taxes1 + service_fees1 + 150;
-                    }else if(bookingClass==BookingClass.ECONOMY) {
-                        totalTicketPrice = the_base_ticket_price + taxes1 + service_fees1 + 50;
-                    
-        }
-    }
+        
 }
 
         
@@ -242,7 +260,7 @@ public class FlightBooking {
             a = "11";
 
         }
-        if(tripType==TripType.RETURE) {
+        if(tripType==TripType.RETURN) {
             a = "22";
         }
         if(bookingClass==BookingClass.FIRST) {
@@ -282,17 +300,17 @@ public class FlightBooking {
     public enum BookingClass {
         FIRST,BUSINESS,ECONOMY;
     }
-    public void setBookingClass(int input1) {
+    public void setBookingClass(String input1) {
             switch (input1) {
-                case 1:
+                case "1":
                 bookingClass = BookingClass.FIRST;
                 break;
                 
-                case 2:
+                case "2":
                 bookingClass = BookingClass.BUSINESS;
                 break;
 
-                case 3:
+                case "3":
                 bookingClass = BookingClass.ECONOMY;
                 break;
 
@@ -306,17 +324,17 @@ public class FlightBooking {
     public TripType getTripType() {
         return tripType;
     }
-    public void setTripType(int input6){
-        if(input6 == 1){
+    public void setTripType(String input6){
+        if(input6.equals("1")){
             tripType = TripType.ONE_WAY;
         }
-        if(input6 == 2) {
-            tripType = TripType.RETURE;
+        if(input6.equals("2")) {
+            tripType = TripType.RETURN;
         }
     }
 
     public enum TripType {
-        ONE_WAY,RETURE;
+        ONE_WAY,RETURN;
     }
 
     

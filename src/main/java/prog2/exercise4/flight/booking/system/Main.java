@@ -41,25 +41,96 @@ public class Main
         System.out.println("Please choose 1.First 2.Business 3.Economy");
         Scanner input1 = new Scanner(System.in);
         int choices1 = input1.nextInt();
-        fb.setBookingClass(choices1);
+        String a = new String();
+        switch(choices1){
+            case 1:
+            a= "1";
+            fb.setBookingClass(a);
+            break;
+
+            case 2:
+            a="2";
+            fb.setBookingClass(a);
+            break;
+
+            case 3:
+            a="3";
+            fb.setBookingClass(a);
+            break;
+
+        }
         fb.getBookingClass();
 
         System.out.println("please choose your trip source 1.Nanjing 2.Beijing 3.Oulu 4.Helsinki");
         Scanner input2 = new Scanner(System.in);
         int choices2 = input2.nextInt();
-        fb.setTripSource(choices2);
+        String b = new String();
+        switch(choices2) {
+            case 1:
+            b="1";
+            fb.setTripSource(b);
+            break;
+
+            case 2:
+            b="2";
+            fb.setTripSource(b);
+            break;
+
+            case 3:
+            b="3";
+            fb.setTripSource(b);
+            break;
+
+            case 4:
+            b="4";
+            fb.setTripSource(b);
+            break;
+        }
         fb.getTripSource();
 
         System.out.println("please choose your tripDestination 1.Nanjing 2.Beijing 3.Oulu 4.Helsinki");
         Scanner input3 = new Scanner(System.in);
         int choices3 = input3.nextInt();
-        fb.setTripDestination(choices3);
+        String c = new String();
+        switch(choices3) {
+            case 1:
+            c="1";
+            fb.setTripDestination(b,c);
+            break;
+
+            case 2:
+            c="2";
+            fb.setTripDestination(b,c);
+            break;
+
+            case 3:
+            c="3";
+            fb.setTripDestination(b,c);
+            break;
+
+            case 4:
+            c="4";
+            fb.setTripDestination(b,c);
+            break;
+        }
         fb.getTripDestination();
 
         System.out.println("please choose your triptype");
         Scanner input6 = new Scanner(System.in);
         int choices6 = input6.nextInt();
-        fb.setTripType(choices6);
+        String d = new String();
+        switch(choices6) {
+            case 1:
+            d="1";
+            fb.setTripType(d);
+            break;
+
+            case 2:
+            d="2";
+            fb.setTripType(d);
+            break;
+        }
+
         fb.getTripType();
 
         String company = fb.getFlightCompany();
